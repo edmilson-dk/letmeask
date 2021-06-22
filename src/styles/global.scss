@@ -6,8 +6,14 @@
   box-sizing: 0;
 }
 
+:root {
+  --purple: #835afd;
+  --white: #fff;
+  --white-800: #f8f8f8;
+}
+
 body {
-  background: #f8f8f8;
+  background: var(--white-800);
   color: #29292E;
 }
 
