@@ -11,6 +11,7 @@
   --white: #fff;
   --white-800: #f8f8f8;
   --gray-100: #a8a8b3;
+  --orange: #ea4335;
 }
 
 body {
@@ -20,4 +21,13 @@ body {
 
 body, input, button, textarea {
   font: 400 16px 'Roboto', sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+button, input {
+  outline: none;
+  border: none;
 }
