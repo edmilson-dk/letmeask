@@ -1,5 +1,4 @@
 import {  Link } from "react-router-dom";
-import { useContext } from "react";
 
 import illustrationSvg from "../../assets/images/illustration.svg";
 import logoSvg from "../../assets/images/logo.svg";
@@ -7,10 +6,10 @@ import logoSvg from "../../assets/images/logo.svg";
 import "../../styles/auth.scss";
 
 import { Button } from "../../components/Button";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export function NewRoom() {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuthContext();
 
   return (
     <section id="page-auth">
