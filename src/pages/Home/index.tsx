@@ -3,7 +3,8 @@ import logoSvg from "../assets/images/logo.svg";
 import googleSvg from "../assets/images/google-icon.svg";
 
 import "../styles/auth.scss";
-import { Button } from "../components/Button";
+
+import { Button } from "../../components/Button";
 
 export function Home() {
   return (
