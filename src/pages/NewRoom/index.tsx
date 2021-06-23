@@ -9,6 +9,7 @@ import "../../styles/auth.scss";
 import { Button } from "../../components/Button";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { database } from "../../services/firebase";
+import { toast } from "react-toastify";
 
 export function NewRoom() {
   const history = useHistory();
@@ -26,6 +27,7 @@ export function NewRoom() {
       authorId: user?.id,
     });
 
+    toast.success("Room created successfully");
     history.push(`/rooms/${firebaseRoom.key}`);
   }
 
