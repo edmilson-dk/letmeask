@@ -1,4 +1,4 @@
-import { FirebaseQuestionsType } from "../types/Room";
+import { FirebaseQuestionsType } from "../types/pages/Room";
 
 export function parseFirebaseQuestions(firebaseQuestions: FirebaseQuestionsType) {
   const parsedQuestions = Object.entries(firebaseQuestions)

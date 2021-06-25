@@ -11,7 +11,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { database } from "../../services/firebase";
 
 import "../../styles/room.scss";
-import { FirebaseQuestionsType, QuestionsType, RoomParamsType } from "../../types/Room";
+import { FirebaseQuestionsType, QuestionsType, RoomParamsType } from "../../types/pages/Room";
 import { parseFirebaseQuestions } from "../../utils/parseFirebaseQuestions";
 
 export function Room() {
