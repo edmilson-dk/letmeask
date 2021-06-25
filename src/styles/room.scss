@@ -53,6 +53,10 @@
         background-color: var(--white);
         box-shadow: 0 2px 12px rgba(0,0,0,0.04);
         resize: vertical;
+
+        &:focus {
+          outline-color: var(--purple);
+        }
       }
 
       .form-footer {
@@ -93,6 +97,10 @@
           }
         }
       }
+    }
+
+    .questions-list {
+      margin: 32px 0;
     }
   }
 }
