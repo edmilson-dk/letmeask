@@ -1,61 +1,29 @@
-import { useEffect } from "react";
 import { FormEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import logoSvg from "../../assets/images/logo.svg";
 
+// components
+import { Question } from "../../components/Question";
 import { Button } from "../../components/Button";
 import { RoomCode } from "../../components/RoomCode";
-import { useAuthContext } from "../../hooks/useAuthContext";
+
 import { database } from "../../services/firebase";
-import { Question } from "../../components/Question";
+import { RoomParamsType } from "../../types/pages/Room";
+
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { useRoom } from "../../hooks/useRoom";
 
 import "../../styles/room.scss";
-import { FirebaseQuestionsType, QuestionsType, RoomParamsType } from "../../types/pages/Room";
-import { parseFirebaseQuestions } from "../../utils/parseFirebaseQuestions";
 
 export function Room() {
-  const [newQuestion, setNewQuestion] = useState("");
-  const [isSentNewQuestion, setIsSentNewQuestion] = useState(false);
-  const [roomTitle, setRoomTitle] = useState("");
-
-  const [questions, setQuestions] = useState<QuestionsType[]>([]);
-
   const params = useParams<RoomParamsType>();
   const { user } = useAuthContext();
   const roomId = params.id;
 
-  useEffect(() => {
-    const roomRef = database.ref(`rooms/${roomId}`);
-
-    roomRef.once("value", room =>{
-      const databaseRoom = room.val();
-      const firebaseQuestions: FirebaseQuestionsType = databaseRoom.questions ?? {};
-      const parsedQuestions = parseFirebaseQuestions(firebaseQuestions);
-
-      setRoomTitle(databaseRoom.title);
-      setQuestions(parsedQuestions);
-    });
-  }, [roomId]);
-
-  useEffect(() => {
-    const roomRef = database.ref(`rooms/${roomId}`);
-
-    if (isSentNewQuestion) {
-      roomRef.once("child_added", room => {
-        const databaseRoom = room.val();
-
-        if (typeof databaseRoom !== "string") {
-          const firebaseQuestions: FirebaseQuestionsType = databaseRoom ?? {};
-          const parsedQuestions = parseFirebaseQuestions(firebaseQuestions);
-          setQuestions(q => [...q, parsedQuestions[parsedQuestions.length-1]]);
-        }
-
-        setIsSentNewQuestion(false);
-      });
-    }
-  }, [roomId, isSentNewQuestion]);
+  const [ newQuestion, setNewQuestion ] = useState("");
+  const { questions, setIsSendNewQuestion, roomTitle } = useRoom(roomId);
 
   async function handleSendQuestion(e: FormEvent) {
     e.preventDefault();
@@ -82,7 +50,7 @@ export function Room() {
     try {
       await database.ref(`rooms/${roomId}/questions`).push(question);
 
-      setIsSentNewQuestion(true);
+      setIsSendNewQuestion(true);
       toast.success("Your question has been sent successfully!");
       setNewQuestion("");
     } catch(err) {
