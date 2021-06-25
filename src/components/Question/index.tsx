@@ -1,8 +1,10 @@
+import { memo } from "react";
+
 import { QuestionPropsType } from "../../types/components/Question";
 
 import "../../styles/question.scss";
 
-export function Question({ author, content }: QuestionPropsType) {
+const QuestionComponent = memo(({ author, content }: QuestionPropsType) => {
   return (
     <div className="question">
       <p>{content}</p>
@@ -17,4 +19,6 @@ export function Question({ author, content }: QuestionPropsType) {
       </footer>
     </div>
   )
-}
+});
+
+export const Question = QuestionComponent;
