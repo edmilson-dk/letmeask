@@ -9,6 +9,7 @@ import { Button } from "../../components/Button";
 import { RoomCode } from "../../components/RoomCode";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { database } from "../../services/firebase";
+import { Question } from "../../components/Question";
 
 import "../../styles/room.scss";
 import { FirebaseQuestionsType, QuestionsType, RoomParamsType } from "../../types/pages/Room";
@@ -124,9 +125,17 @@ export function Room() {
           </div>
         </form>
 
-        {
-          questions.length > 0 && questions.map(q => <p key={q.id}>{q.content}</p>)
-        }
+        <article className="questions-list">
+          {
+            questions.length > 0 && questions.map(({ author, id, content }) => (
+              <Question 
+                key={id} 
+                author={author} 
+                content={content}
+              />
+            ))
+          }
+        </article>
       </main>
     </div>
   )
