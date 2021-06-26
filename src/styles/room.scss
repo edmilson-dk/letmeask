@@ -112,6 +112,20 @@
 
     .questions-list {
       margin: 32px 0;
+      
+      .empty-questions {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .empty-questions-user {
+        position: absolute;
+        top: 90%;
+        left: 50%;
+        transform: translate(-50%, -90%);
+      }
     }
   }
 }

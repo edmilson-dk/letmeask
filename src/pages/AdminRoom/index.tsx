@@ -116,7 +116,9 @@ export function AdminRoom() {
                 </button>
               </Question>
             )) : (
-              <img src={emptyQuestionsImg} alt="Nenhuma questão disponivél"/>
+              <div className="empty-questions">
+                <img src={emptyQuestionsImg} alt="Nenhuma questão disponivél"/>
+              </div>
             )
           }
         </article>
