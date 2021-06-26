@@ -47,6 +47,7 @@ export function Room() {
       isHighLighted: false,
       isAnswered: false,
     }
+    
     try {
       await database.ref(`rooms/${roomId}/questions`).push(question);
 
@@ -66,7 +67,7 @@ export function Room() {
         toast.success("Like successfully added!");
       } else {
         await database.ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`).remove();
-        toast.success("Like successfully removed!");
+        toast.info("Like successfully removed!");
       }
     } catch (err) {
       toast.warning("An unexpected error has occurred, please try again.");
