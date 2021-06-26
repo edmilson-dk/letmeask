@@ -3,47 +3,30 @@ import { useEffect, useState } from "react";
 import { database } from "../../services/firebase";
 import { parseFirebaseQuestions } from "../../utils/parseFirebaseQuestions";
 import { UseRoomReturnTypes } from "../../types/hooks/useRoom";
-import { FirebaseQuestionsType, QuestionsType } from "../../types/pages/Room";
+import { FirebaseQuestionsType, QuestionsType } from "../../types/hooks/useRoom";
+import { useAuthContext } from "../useAuthContext";
 
 export function useRoom(roomId: string): UseRoomReturnTypes {
-  const [isSendNewQuestion, setIsSendNewQuestion] = useState(false);
+  const { user } = useAuthContext();
   const [roomTitle, setRoomTitle] = useState("");
   const [questions, setQuestions] = useState<QuestionsType[]>([]);
 
   useEffect(() => {
     const roomRef = database.ref(`rooms/${roomId}`);
 
-    roomRef.once("value", room =>{
+    roomRef.on("value", room =>{
       const databaseRoom = room.val();
       const firebaseQuestions: FirebaseQuestionsType = databaseRoom.questions ?? {};
-      const parsedQuestions = parseFirebaseQuestions(firebaseQuestions);
-
+     
+      const parsedQuestions = parseFirebaseQuestions(firebaseQuestions, user);
+  
       setRoomTitle(databaseRoom.title);
       setQuestions(parsedQuestions);
     });
-  }, [roomId]);
-
-  useEffect(() => {
-    const roomRef = database.ref(`rooms/${roomId}`);
-
-    if (isSendNewQuestion) {
-      roomRef.once("child_added", room => {
-        const databaseRoom = room.val();
-
-        if (typeof databaseRoom !== "string") {
-          const firebaseQuestions: FirebaseQuestionsType = databaseRoom ?? {};
-          const parsedQuestions = parseFirebaseQuestions(firebaseQuestions);
-          setQuestions(q => [...q, parsedQuestions[parsedQuestions.length-1]]);
-        }
-
-        setIsSendNewQuestion(false);
-      });
-    }
-  }, [roomId, isSendNewQuestion]);
+  }, [roomId, user]);
 
   return {
     questions,
     roomTitle,
-    setIsSendNewQuestion
   }
 }
