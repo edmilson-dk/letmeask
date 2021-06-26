@@ -34,5 +34,25 @@
         font-size: 14px;
       }
     }
+
+    button {
+      border: 0;
+      background-color: transparent;
+      cursor: pointer;
+
+      &.question-like-btn {
+        display: flex;
+        align-items: flex-end;
+        color: var(--gray-300);
+
+        &.liked {
+          color: var(--purple);
+
+          svg path {
+            stroke: var(--purple);
+          }
+        }
+      }
+    }
   }
 }
