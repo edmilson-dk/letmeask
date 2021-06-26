@@ -28,7 +28,7 @@ export function NewRoom() {
     });
 
     toast.success("Room created successfully");
-    history.push(`/rooms/${firebaseRoom.key}`);
+    history.push(`/admin/rooms/${firebaseRoom.key}`);
   }
 
   return (
