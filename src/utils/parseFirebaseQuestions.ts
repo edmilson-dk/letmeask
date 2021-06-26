@@ -21,5 +21,7 @@ export function parseFirebaseQuestions(
       }
     });
 
-  return parsedQuestions;
+    const order = parsedQuestions.sort((a,b) => b.likesCount - a.likesCount);
+
+  return order;
 }
