@@ -5,7 +5,7 @@ import logoSvg from "../../assets/images/logo.svg";
 import deleteImg from "../../assets/images/delete.svg";
 import checkImg from "../../assets/images/check.svg";
 import answerImg from "../../assets/images/answer.svg";
-import emptyQuestionsImg from "../../assets/empty-questions.svg";
+import emptyQuestionsImg from "../../assets/images/empty-questions.svg";
 
 // components
 import { Question } from "../../components/Question";
