@@ -23,6 +23,8 @@ export function useRoom(roomId: string): UseRoomReturnTypes {
       setRoomTitle(databaseRoom.title);
       setQuestions(parsedQuestions);
     });
+
+    return () => roomRef.off("value");
   }, [roomId, user]);
 
   return {
