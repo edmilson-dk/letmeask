@@ -20,7 +20,7 @@ import "../../styles/room.scss";
 
 export function Room() {
   const params = useParams<RoomParamsType>();
-  const { user } = useAuthContext();
+  const { user,signInWithGoogle } = useAuthContext();
   const roomId = params.id;
 
   const [newQuestion, setNewQuestion] = useState("");
@@ -104,7 +104,15 @@ export function Room() {
                 <span>{user.name}</span>
               </div>
             ) : (
-              <span>Para enviar uma pergunta, <button type="button">faça seu login</button>.</span>
+              <span>
+                Para enviar uma pergunta, 
+                <button 
+                  type="button"
+                  onClick={signInWithGoogle}
+                >
+                  faça seu login.
+                </button>
+              </span>
             )}
             <Button type="submit" disabled={!user}>Enviar pergunta</Button>
           </div>
