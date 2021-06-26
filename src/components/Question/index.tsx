@@ -4,7 +4,7 @@ import { QuestionPropsType } from "../../types/components/Question";
 
 import "../../styles/question.scss";
 
-const QuestionComponent = memo(({ author, content }: QuestionPropsType) => {
+const QuestionComponent = memo(({ author, content, children }: QuestionPropsType) => {
   return (
     <div className="question">
       <p>{content}</p>
@@ -14,7 +14,7 @@ const QuestionComponent = memo(({ author, content }: QuestionPropsType) => {
           <span>{ author.name }</span>
         </div>
         <div>
-          
+          { children }
         </div>
       </footer>
     </div>
