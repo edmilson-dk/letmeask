@@ -5,6 +5,7 @@ import logoSvg from "../../assets/images/logo.svg";
 import deleteImg from "../../assets/images/delete.svg";
 import checkImg from "../../assets/images/check.svg";
 import answerImg from "../../assets/images/answer.svg";
+import emptyQuestionsImg from "../../assets/empty-questions.svg";
 
 // components
 import { Question } from "../../components/Question";
@@ -81,7 +82,7 @@ export function AdminRoom() {
 
         <article className="questions-list">
           {
-            questions.length > 0 && questions.map(({ author, id, content, isAnswered, isHighLighted }) => (
+            questions.length > 0 ? questions.map(({ author, id, content, isAnswered, isHighLighted }) => (
               <Question
                 key={id}
                 author={author}
@@ -114,7 +115,9 @@ export function AdminRoom() {
                   <img src={deleteImg} alt="Remover pergunta" />
                 </button>
               </Question>
-            ))
+            )) : (
+              <img src={emptyQuestionsImg} alt="Nenhuma questão disponivél"/>
+            )
           }
         </article>
       </main>
