@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 
 import logoSvg from "../../assets/images/logo.svg";
 import deleteImg from "../../assets/images/delete.svg";
+import checkImg from "../../assets/images/check.svg";
+import answerImg from "../../assets/images/answer.svg";
 
 // components
 import { Question } from "../../components/Question";
@@ -15,13 +17,14 @@ import { RoomParamsType } from "../../types/pages/Room";
 import { useRoom } from "../../hooks/useRoom";
 
 import "../../styles/room.scss";
+import { Fragment } from "react";
 
 export function AdminRoom() {
   const params = useParams<RoomParamsType>();
   const history = useHistory();
-  
+
   const roomId = params.id;
-  
+
   const { questions, roomTitle } = useRoom(roomId);
 
   async function handleEndRoom() {
@@ -31,6 +34,22 @@ export function AdminRoom() {
 
     history.push("/");
     toast.info("Room closed successfully");
+  }
+
+  async function handleCheckQuestionAsAnswered(questionId: string) {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+      isAnswered: true,
+    });
+
+    toast.info("Question marked as answered");
+  }
+
+  async function handleHighLightQuestion(questionId: string) {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+      isHighLighted: true,
+    });
+
+    toast.info("highlighted question");
   }
 
   async function handleDeleteQuestion(questionId: string) {
@@ -48,7 +67,7 @@ export function AdminRoom() {
         <div className="header-content">
           <img src={logoSvg} alt="Logo" />
           <div>
-            <RoomCode code={roomId}/>
+            <RoomCode code={roomId} />
             <Button isOutlined onClick={handleEndRoom}>Encerrar sala</Button>
           </div>
         </div>
@@ -57,22 +76,42 @@ export function AdminRoom() {
       <main className="content">
         <div className="room-title">
           <h1>Sala {roomTitle}</h1>
-          { questions.length > 0 && <span>{ questions.length } perguntas</span>}
+          {questions.length > 0 && <span>{questions.length} perguntas</span>}
         </div>
 
         <article className="questions-list">
           {
-            questions.length > 0 && questions.map(({ author, id, content }) => (
-              <Question 
-                key={id} 
-                author={author} 
+            questions.length > 0 && questions.map(({ author, id, content, isAnswered, isHighLighted }) => (
+              <Question
+                key={id}
+                author={author}
                 content={content}
+                isAnswered={isAnswered}
+                isHighLighted={isHighLighted}
               >
+                {
+                  !isAnswered && (
+                    <Fragment>
+                      <button
+                        type="button"
+                        onClick={() => handleCheckQuestionAsAnswered(id)}
+                      >
+                        <img src={checkImg} alt="Marcar pergunta como respondida" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleHighLightQuestion(id)}
+                      >
+                        <img src={answerImg} alt="Destacar está pergunta" />
+                      </button>
+                    </Fragment>
+                  )
+                }
                 <button
                   type="button"
                   onClick={() => handleDeleteQuestion(id)}
                 >
-                  <img src={deleteImg} alt="Delete question button" />
+                  <img src={deleteImg} alt="Remover pergunta" />
                 </button>
               </Question>
             ))

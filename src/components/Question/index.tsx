@@ -4,9 +4,18 @@ import { QuestionPropsType } from "../../types/components/Question";
 
 import "../../styles/question.scss";
 
-const QuestionComponent = memo(({ author, content, children }: QuestionPropsType) => {
+const QuestionComponent = memo(({ 
+  author, content, children, 
+  isAnswered = false,
+  isHighLighted = false 
+}: QuestionPropsType) => {
   return (
-    <div className="question">
+    <div 
+      className={
+        `question 
+        ${isAnswered ? "answered" : ""}
+        ${(isHighLighted && !isAnswered) ? "highlighted": ""}`}
+    >
       <p>{content}</p>
       <footer>
         <div className="user-info">

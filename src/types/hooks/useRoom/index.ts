@@ -6,8 +6,8 @@ export type FirebaseQuestionsType = Record<string, {
     avatar: string;
   };
   content: string;
-  isHighLighted: string;
-  isAnswered: string;
+  isHighLighted: boolean;
+  isAnswered: boolean;
   likes: Record<string, {
     authorId: string;
   }>
@@ -20,8 +20,8 @@ export type QuestionsType = {
     avatar: string;
   };
   content: string;
-  isHighLighted: string;
-  isAnswered: string;
+  isHighLighted: boolean;
+  isAnswered: boolean;
   likesCount: number;
   likeId: string | undefined;
 }

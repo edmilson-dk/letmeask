@@ -7,4 +7,6 @@ export type QuestionPropsType = {
     avatar: string;
   };
   children?: ReactNode;
+  isHighLighted?: boolean;
+  isAnswered?: boolean;
 }
